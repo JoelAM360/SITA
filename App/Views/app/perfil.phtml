@@ -1,0 +1,632 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Perfil</h1>
+    </div><!-- End Page Title -->
+
+    <!-- Modal Para Leitra de PDF -->
+    <div class="modal fade" id="lerPdfModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloPdf"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="limparBodyModal()"></button>
+                </div>
+                <div class="modal-body bg-secodary" id="body_containerPdf">
+
+                </div>
+                <div class="modal-footer">
+                    <button id="zoom_plus">+</button>
+                    <button id="zoom_out">-</button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="limparBodyModal()">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- End Modal Para Leitra de PDF-->
+
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Area da imgans e Seguidores-->
+                            <div class="col-md-3">
+                                <div class="profile-card pt-4 d-flex flex-column align-items-center">
+                                    <img src="/app/assets/img/<?= $this->view->user[0]['img'] ?>" width="150"
+                                        height="150" alt="Profile" class="rounded-circle">
+                                    <h5><?= $this->view->user[0]['nome'] ?></h5>
+
+                                    <div class="social-links mt-0 " data-bs-toggle="modal" data-bs-target="#basicModal">
+                                        <!-- Seguidores -->
+                                        <a href="#" style="width:60px;font-size:16px"
+                                            class="btn btn-sm btn-outline-secondary text-center p-2"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Seguindo">
+                                            <span class="m-1"><?= count($this->view->seguidores) ?></span>
+                                            <i class="bi bi-person-plus-fill"></i>
+                                        </a>
+                                        <!-- End Seguidores-->
+
+                                        <!-- Seguindo-->
+                                        <a href="#" style="width:65px;font-size:16px"
+                                            class="btn btn-sm btn-outline-secondary text-center p-2"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Seguidores">
+                                            <span class="m-1"><?= count($this->view->seguindo) ?></span>
+                                            <i class="bi bi-people-fill"></i>
+                                        </a>
+                                        <!--End Seguindo-->
+                                    </div>
+
+                                    <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true"
+                                        style="display: none;">
+                                        <div class="modal-dialog modal-dialog-scrollable">
+                                            <div class="modal-content">
+
+                                                <div class="position-absolute top-0 end-0">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Bordered Tabs</h5>
+
+                                                    <!-- Bordered Tabs -->
+                                                    <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab"
+                                                        role="tablist">
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link active" id="home-tab"
+                                                                data-bs-toggle="tab" data-bs-target="#seguidores"
+                                                                type="button" role="tab" aria-controls="home"
+                                                                aria-selected="true">Seguidores</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link" id="profile-tab"
+                                                                data-bs-toggle="tab" data-bs-target="#seguindo"
+                                                                type="button" role="tab" aria-controls="profile"
+                                                                aria-selected="false">Seguindo</button>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content pt-2" id="borderedTabContent">
+                                                        <div class="tab-pane fade active show" id="seguidores"
+                                                            role="tabpanel" aria-labelledby="home-tab">
+                                                            <?php foreach ($this->view->seguidores as $user) { ?>
+                                                            <ul class="list-group list-group-flush">
+                                                                <li class="list-group-item d-flex align-items-center">
+                                                                    <div class="d-flex w-100 align-items-center">
+                                                                        <img src="/app/assets/img/<?= $user['img'] ?>"
+                                                                            alt="John Doe" class="me-3 rounded-circle"
+                                                                            style="width: 40px; height: 40px;" />
+                                                                        <a href="#" class="text-black">
+                                                                            <h6 class="mb-1 d-flex flex-column">
+                                                                                <strong
+                                                                                    class="mb-1"><?= $user['nome'] ?></strong>
+                                                                                <small
+                                                                                    class="text-muted"><?= $user['instituicao'] ?></small>
+                                                                            </h6>
+                                                                        </a>
+                                                                    </div>
+                                                                    <!-- Button -->
+                                                                    <div class="btn-seguir">
+                                                                        <button id="btnSeguir_<?= $user['id'] ?>"
+                                                                            class="btn btn-outline-primary btn-sm <?= $user['seguindo_sn'] == 1 ? 'd-none' : '' ?>"
+                                                                            onclick="seguir(<?= $user['id'] ?>, 'seguir')">Seguir</a>
+                                                                            <button id="r-btnSeguir_<?= $user['id'] ?>"
+                                                                                class="btn btn-outline-primary btn-sm active <?= $user['seguindo_sn'] == 0 ? 'd-none' : '' ?>"
+                                                                                onclick="seguir(<?= $user['id'] ?>, 'r-seguir')">Seguindo</a>
+                                                                    </div>
+                                                                </li>
+
+                                                            </ul>
+                                                            <?php } ?>
+
+                                                        </div>
+                                                        <div class="tab-pane fade" id="seguindo" role="tabpanel"
+                                                            aria-labelledby="profile-tab">
+                                                            <?php foreach ($this->view->seguindo as $user) { ?>
+                                                            <ul class="list-group list-group-flush">
+                                                                <li class="list-group-item d-flex align-items-center">
+                                                                    <div class="d-flex w-100 align-items-center">
+                                                                        <img src="/app/assets/img/<?= $user['img'] ?>"
+                                                                            alt="John Doe" class="me-3 rounded-circle"
+                                                                            style="width: 40px; height: 40px;" />
+                                                                        <a href="#" class="text-black">
+                                                                            <h6 class="mb-1 d-flex flex-column">
+                                                                                <strong
+                                                                                    class="mb-1"><?= $user['nome'] ?></strong>
+                                                                                <small
+                                                                                    class="text-muted"><?= $user['instituicao'] ?></small>
+                                                                            </h6>
+                                                                        </a>
+                                                                    </div>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-primary btn-sm">Seguir</button>
+                                                                </li>
+
+                                                            </ul>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div><!-- End Bordered Tabs -->
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Fim Area da imgans e Seguidores-->
+
+                            <!-- Area das Informações do Users-->
+                            <div class="col-md-8">
+                                <h5 class="card-title">Tipo de Conta</h5>
+                                <p><?= $this->view->user[0]['sobre'] ?></p>
+                                <small><strong>Instituição:</strong>
+                                    <?= $this->view->user[0]['instituicao'] ?></small><br>
+                                <small><strong>Curso:</strong> <?= $this->view->user[0]['curso'] ?></small><br>
+                                <small><strong>Ocupação:</strong> <?= $this->view->user[0]['profissao'] ?></small><br>
+                                <?php if (count($this->view->mentor) > 0) { ?>
+                                <small><strong>Mentoria:</strong> <?= $this->view->mentor[0]['tipo_mentori'] ?>
+                                    (Aprovado)</small><br>
+                                <a class="btn btn-sm btn-success mt-3" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#pagar">Pagar Pelo Serviço</a>
+
+                                <div class="modal fade" id="pagar" tabindex="-1" aria-hidden="true"
+                                    style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Solicitar Serviços De Mentoria</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/solicitarServico" class="row g-3 needs-validation"
+                                                    method="post" enctype="multipart/form-data" novalidate>
+                                                    <div class="mb-3">
+                                                        <label for="validationCustom01" class="form-label">Perfil do
+                                                            Pré-Projeto(PDF ou Uma Imagem)</label>
+                                                        <input type="file" class="form-control" name="pre_projeto"
+                                                            id="validationCustom01" aria-label="file example" required>
+                                                        <div class="invalid-feedback">
+                                                            Anexe o documento, no formato PDF ou Uma Imagem
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <label for="validationCustom04" class="form-label">Selecine o
+                                                            Serviço</label>
+                                                        <select class="form-select" name="tipo_mentor"
+                                                            id="validationCustom04" required>
+                                                            <option selected disabled value="">Tipo de Mentoria</option>
+                                                            <option
+                                                                <?= $this->view->mentor[0]['tipo_mentori'] == 'Trabalhos Técnicos' ? 'selected' : $this->view->mentor[0]['tipo_mentori'] == 'Ambos' ? '' : 'disabled' ?>>
+                                                                Trabalhos Técnicos</option>
+                                                            <option
+                                                                <?= $this->view->mentor[0]['tipo_mentori'] == 'Trabalhos Teoricos' ? 'selected' : $this->view->mentor[0]['tipo_mentori'] == 'Ambos' ? '' : 'disabled' ?>>
+                                                                Trabalhos Teoricos</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">
+                                                            Selecione Uma Opção
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="id_mentor"
+                                                        value="<?= $this->view->mentor[0]['id_mentor'] ?>">
+                                                    <input type="hidden" name="id_user" value="<?= $_GET['id'] ?>">
+
+                                                    <div class="mb-3">
+                                                        <label for="validationCustom05" class="form-label">Anexe
+                                                            Comprovativo de Pagamento</label>
+                                                        <input type="file" class="form-control" name="comprovativo"
+                                                            id="validationCustom05" aria-label="file example" required>
+                                                        <div class="invalid-feedback">Anexe o seu documento, no formato
+                                                            PDF ou Uma Imagem</div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <button class="btn btn-primary" type="submit">Submeter</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php } ?>
+                                <a class="btn btn-sm btn-primary mt-3"
+                                    href="/conversas?id=<?= $this->view->user[0]['id'] ?>">Mensagem</a>
+
+                            </div>
+                            <!-- Fim Area das Informações do Users-->
+
+                        </div>
+                        <!--Fim Row interna-->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-12" style="margin-top:-20px">
+                <div class="card-body">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home"
+                                aria-selected="true">Meus arquivos</button>
+                        </li>
+                        <li class="nav-item <?= ($this->view->user[0]['id'] != $_SESSION['id']) ? "d-none" :""?>"
+                            role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile"
+                                aria-selected="false">Carregar Arquivo</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                                data-bs-target="#bordered-contact" type="button" role="tab" aria-controls="contact"
+                                aria-selected="false">Informações</button>
+                        </li>
+                        <?php if (count($this->view->mentor) > 0) { ?>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="avalicao-tab" data-bs-toggle="tab"
+                                data-bs-target="#bordered-avalicao" type="button" role="tab" aria-controls="avalicao"
+                                aria-selected="false">Avaliações</button>
+                        </li>
+                        <?php } ?>
+                        <?php if (count($this->view->mentor) > 0 && $this->view->mentor[0]['id_user'] == $_SESSION['id']) { ?>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="lista-tab" data-bs-toggle="tab"
+                                data-bs-target="#bordered-lista" type="button" role="tab" aria-controls="lista"
+                                aria-selected="false">Lista de Aluno</button>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                    <div class="tab-content pt-2" id="borderedTabContent">
+                        <div class="tab-pane fade active show" id="bordered-home" role="tabpanel"
+                            aria-labelledby="home-tab">
+                            <!--======================= Área dos Pdf(Projetos) =========================-->
+                            <div class="row">
+                                <?php if (isset($_GET['upload']) && $_GET['upload'] == true) { ?>
+                                <div class="text-success mb-4" id="feedback">Arquivo Carregado Com Sucesso!</div>
+                                <?php } elseif (isset($_GET['removido']) && $_GET['removido'] == true) { ?>
+                                <div class="text-danger mb-4 ml-2" id="feedback">Arquivo Removido!</div>
+                                <?php } ?>
+                                <?php if (count($this->view->upload ) == 0) { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Meus Arquivos </h5>
+                                        Seu repositorio está vazio
+                                    </div>
+                                </div>
+                                <?php } else { ?>
+                                <?php foreach ($this->view->upload as $id_file => $file_date) { ?>
+                                <div class="col-sm-3 col-lg-4">
+                                    <!-- Card do Projetos Submetidos -->
+                                    <div class="card mb-4" style="height:230px;">
+                                        <div style="height:150px;">
+                                            <canvas class="w-100 canvasPreview">
+                                                <?= $id_file . "#" . $file_date['upload'] ?>
+                                            </canvas>
+                                        </div>
+
+                                        <div style="padding:10px">
+
+                                            <span class="card-title" style="font-size:14px; padding:7Maccaopx">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#lerPdfModal"
+                                                    onclick="lerPdf('<?= $file_date['upload'] ?>',<?= $id_file ?>,'<?= $file_date['nome_projeto'] ?>')"><?= $file_date['nome_projeto'] ?></a></span>
+                                            <br>
+
+                                            <a href="/perfil?id=<?= $file_date['id_user'] ?>">
+                                                <img src="/app/assets/img/<?= $file_date['img'] ?>"
+                                                    class="img-fluid rounded-circle" style="margin-right:2px" width="25"
+                                                    height="25" alt="...">
+                                                <span style="font-size: 12px;">
+                                                    <?= $file_date['nome'] ?>
+                                                </span>
+                                            </a>
+
+                                            <span id="r-curtir_<?= $file_date['id_projeto'] ?>" class="d-none"
+                                                onclick="avaliarProjeto('r-curtir', <?= $file_date['id_projeto'] ?>)">
+                                                <i class="bi bi-hand-thumbs-up-fill"></i>
+                                            </span>
+                                            <span id="curtir_<?= $file_date['id_projeto'] ?>"
+                                                onclick="avaliarProjeto('curtir', <?= $file_date['id_projeto'] ?>)">
+                                                <i class="bi bi-hand-thumbs-up"></i>
+                                            </span>
+                                            <span
+                                                id="textLikes_<?= $file_date['id_projeto'] ?>"><?= $file_date['qtdLikes'] ?></span>
+
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Card with an image on left -->
+                                </div>
+                                <?php } ?>
+                                <?php } ?>
+                            </div>
+                            <!--=============================Fim Area ==================================-->
+                        </div>
+                        <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <!--======================= Área Para Upload =========================-->
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-center align-items-center"
+                                        style="height:200px; cursor: pointer;" data-bs-toggle="modal"
+                                        data-bs-target="#modalDialogScrollable">
+                                        <div class="d-flex flex-column justify-content-center align-items-center"
+                                            style="border: 1px dashed;border-radius: 3px;height:190px; width: 400px;">
+                                            <h5>Clique para carregar um arquivo(pdf)</h5>
+                                            <p>Crie um repositorio para seu projeto </p>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Dialog Scrollable -->
+                            <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Modal Dialog Scrollable</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body bg-secodary">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">General Form Elements</h5>
+                                                    <!-- General Form Elements -->
+                                                    <form name="upload-form" enctype="multipart/form-data">
+                                                        <div class="row mb-3">
+                                                            <label for="inputText" class="col-sm-2 col-form-label">Nome
+                                                                do Projeto</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="nome" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputEmail"
+                                                                class="col-sm-2 col-form-label">Curso</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="curso" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputNumber"
+                                                                class="col-sm-2 col-form-label">Área de Formação</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="area_formacao"
+                                                                    class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputNumber"
+                                                                class="col-sm-2 col-form-label">File Upload</label>
+                                                            <div class="col-sm-10">
+                                                                <input class="form-control" name="file_upload"
+                                                                    type="file" id="formFile">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-3">
+                                                            <label for="inputPassword"
+                                                                class="col-sm-2 col-form-label">Textarea</label>
+                                                            <div class="col-sm-10">
+                                                                <textarea class="form-control"
+                                                                    style="height: 100px"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <fieldset class="row mb-3">
+                                                            <legend class="col-form-label col-sm-2 pt-0">Radio</legend>
+                                                            <div class="col-sm-10">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="gridRadios" id="gridRadios2"
+                                                                        value="option2">
+                                                                    <label class="form-check-label" for="gridRadios2">
+                                                                        Second radio
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+
+                                                        <div class="row mb-3">
+                                                            <label class="col-sm-2 col-form-label">Select</label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    <option selected="">Open this select menu</option>
+                                                                    <option value="1">One</option>
+                                                                    <option value="2">Two</option>
+                                                                    <option value="3">Three</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-3">
+                                                            <label class="col-sm-2 col-form-label">Submit Button</label>
+                                                            <div class="col-sm-10">
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    id="btnSumitForm" data-bs-toggle="modal"
+                                                                    data-bs-target="#progressUpload">Submit
+                                                                    Form</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </form><!-- End General Form Elements -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- End Modal Dialog Scrollable-->
+
+                            <!-- Modal Progress-->
+                            <div class="modal fade" id="progressUpload" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Submentedo Arquivo</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- General Form Elements -->
+                                            <progress value="0" max="100"></progress>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- End Basic Modal-->
+
+
+                            <!--======================= Área Fim Upload =========================-->
+                        </div>
+
+                        <div class="tab-pane fade" id="bordered-contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Sobre Mim</h5>
+                                    <?= empty($this->view->upload[0]['sobre']) ? "Sem Informações" : $this->view->upload[0]['sobre'] ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="bordered-avalicao" role="tabpanel"
+                            aria-labelledby="avalicao-tab">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Comentários</h5>
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row"><a href="#"><img
+                                                            src="/app/assets/img/<?= $_SESSION['img'] ?>" alt=""></a>
+                                                </th>
+                                                <td>
+                                                    <a href="#" class="text-primary fw-bold mb-1">Joel Malamba</a>
+                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+                                                        non ut,
+                                                        corrupti fugit voluptatem corporis pariatur distinctio sint!
+                                                        Cupiditate
+                                                        voluptates perspiciatis deleniti laboriosam tenetur molestiae
+                                                        quis
+                                                        temporibus consectetur. Quod, a!....
+                                                        <a href="#"> Ler mais</a>
+                                                    </p>
+
+                                                </td>
+                                                <td class="fw-bold">Respostas(12)</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th scope="row"><a href="#"><img
+                                                            src="/app/assets/img/<?= $_SESSION['img'] ?>" alt=""></a>
+                                                </th>
+                                                <td>
+                                                    <a href="#" class="text-primary fw-bold mb-1">Joel Malamba</a>
+                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+                                                        non ut,
+                                                        corrupti fugit voluptatem corporis pariatur distinctio sint!
+                                                        Cupiditate
+                                                        voluptates perspiciatis deleniti laboriosam tenetur molestiae
+                                                        quis
+                                                        temporibus consectetur. Quod, a!....
+                                                        <a href="#"> Ler mais</a>
+                                                    </p>
+
+                                                </td>
+                                                <td class="fw-bold">Respostas(12)</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="bordered-lista" role="tabpanel" aria-labelledby="lista-tab">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">List</h5>
+                                    <!-- Default Table -->
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Foto</th>
+                                                <th scope="col">Nome</th>
+                                                <th scope="col">Tipo Trabalho</th>
+                                                <th scope="col">Ação</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($this->view->mentorAluno as $alunos) { ?>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td><img src="/app/assets/img/<?= $alunos['img'] ?>" alt="" width="35">
+                                                </td>
+                                                <td><?= $alunos['nome'] ?></td>
+                                                <td><?= $alunos['tipo_mentori'] ?></td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-primary"
+                                                        href="/conversas?id=<?= $alunos['id'] ?>"><i
+                                                            class="bi bi-chat-left-text"></i></a>
+                                                </td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                    <!-- End Default Table Example -->
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Bordered Tabs -->
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>

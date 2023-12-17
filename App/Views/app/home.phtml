@@ -1,0 +1,212 @@
+<main id="main" class="main">
+    <div class="card-body">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary d-none" data-bs-toggle="moda" data-bs-target="#exampleModal"
+            id="teste">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Olá, seja bem vindo ao SITA</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Esperamos está ferramenta seja de grande ajuda para si.
+                        Mas para que o SITA posso lhe ajudar buscar os melhor projetos para si precisaremos de algumas
+                        informções
+                        rápidas. Tomares apenas 1 minuto do seu tempo.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mais tarde</button>
+                        <a href="/set_perfil" class="btn btn-primary">Continuar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pagetitle">
+            <h1>User Comum</h1>
+        </div><!-- End Page Title -->
+        <!-- Modal Para Leitra de PDF -->
+        <div class="modal fade" id="lerPdfModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tituloPdf"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            onclick="limparBodyModal()"></button>
+                    </div>
+                    <div class="modal-body bg-secodary" id="body_containerPdf">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="zoom_plus">+</button>
+                        <button id="zoom_out">-</button>
+
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            onclick="limparBodyModal()">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Modal Para Leitra de PDF-->
+        <section class="section dashboard">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <div class="row">
+                        <?php if (count($this->view->user) == 0) { ?>
+                        <!-- Aréa de Resultados Projetos Submetidos | Projetos Pesquisados -->
+                        <?php foreach ($this->view->upload as $id_file => $file_date) { ?>
+                        <div class="col-sm-4 col-lg-6">
+                            <!-- Card do Projetos Submetidos | Projetos Pesquisados -->
+                            <div class="card mb-4" style="height:230px;">
+                                <div style="height:150px;">
+                                    <canvas class="w-100 canvasPreview">
+                                        <?= $id_file . "#" . $file_date['upload'] ?>
+                                    </canvas>
+                                </div>
+
+                                <div style="padding:10px">
+                                    <span class="card-title" style="font-size:14px; padding:7Maccaopx">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#lerPdfModal"
+                                            onclick="lerPdf('<?= $file_date['upload'] ?>',<?= $id_file ?>,'<?= $file_date['nome_projeto'] ?>')"><?= $file_date['nome_projeto'] ?></a></span>
+                                    <br>
+                                    <a href="/perfil?id=<?= $file_date['id_user'] ?>">
+                                        <img src="/app/assets/img/<?= $file_date['img'] ?>"
+                                            class="img-fluid rounded-circle" style="margin-right:2px" width="25"
+                                            height="25" alt="...">
+                                        <span style="font-size: 12px;">
+                                            <?= $file_date['nome'] ?>
+                                        </span>
+                                    </a>
+                                    <span id="r-curtir_<?= $file_date['id_projeto'] ?>" class="d-none"
+                                        onclick="avaliarProjeto('r-curtir', <?= $file_date['id_projeto'] ?>)">
+                                        <i class="bi bi-hand-thumbs-up-fill"></i>
+                                    </span>
+                                    <span id="curtir_<?= $file_date['id_projeto'] ?>"
+                                        onclick="avaliarProjeto('curtir', <?= $file_date['id_projeto'] ?>)">
+                                        <i class="bi bi-hand-thumbs-up"></i>
+                                    </span>
+                                    <span
+                                        id="textLikes_<?= $file_date['id_projeto'] ?>"><?= $file_date['qtdLikes'] ?></span>
+                                </div>
+                            </div>
+                            <!-- End Card dos Projetos Submetidos -->
+                        </div>
+                        <?php } ?>
+                        <?php } else { ?>
+                        <!-- Aréa de Resultados  da Pesquisa de uma Instituição | Perfil de User-->
+                        <?php foreach ($this->view->user as $id => $user) { ?>
+                        <div class="col-md-6 mb-5">
+                            <!-- Card with an image on left -->
+                            <div class="card mb-3" style="height: 120px;">
+
+                                <div class="d-flex g-0 h-100">
+                                    <div>
+                                        <div class="card-body h-100">
+                                            <!-- Media object -->
+                                            <div class="row mt-2 h-100">
+                                                <!-- Image -->
+                                                <div class="col-3 h-100">
+                                                    <img src="/app/assets/img/<?= $user['img'] ?>" alt="John Doe"
+                                                        class="me-3 rounded-circle" style="width: 60px;height: 60px;" />
+                                                </div>
+
+                                                <!-- Body -->
+                                                <div class="col-9 ml-sm-2" style="fpadding: 10px;">
+                                                    <span class="card-title" style="font-size:15px;">
+                                                        <?php if (isset($user['nome_inst'])) { ?>
+                                                        <a href="/perfilInst?id=<?= $user['id'] ?>">
+                                                            <?= substr($user['nome_inst'], 0, 16) . "..." ?>
+                                                        </a>
+                                                        <?php } else { ?>
+                                                        <a href="/perfil?id=<?= $user['id'] ?>">
+                                                            <?= substr($user['nome'], 0, 16) . "..." ?>
+                                                        </a>
+                                                        <?php } ?>
+                                                    </span>
+                                                    <p>
+                                                    <div class="btn-seguir">
+                                                        <button id="btnSeguir_<?= $user['id'] ?>"
+                                                            class="btn btn-outline-primary btn-md <?= $user['seguindo_sn'] == 1 ? 'd-none' : '' ?>"
+                                                            onclick="seguir(<?= $user['id'] ?>, 'seguir')">Seguir</button>
+                                                        <button id="r-btnSeguir_<?= $user['id'] ?>"
+                                                            class="btn btn-outline-primary btn-md active <?= $user['seguindo_sn'] == 0 ? 'd-none' : '' ?>"
+                                                            onclick="seguir(<?= $user['id'] ?>, 'r-seguir')">Seguindo</button>
+                                                    </div>
+                                                    </p>
+                                                    <!-- Button -->
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Media object -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- End Card with an image on left -->
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+
+                    <!-- Lista de Mentores -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Sugestão de Mentores <span>| Perfis</span></h5>
+                            <?php foreach ($this->view->mentores as $id => $user) { ?>
+
+                            <!-- Media object -->
+                            <div class="row mt-2 h-100">
+                                <!-- Image -->
+                                <div class="col-3 h-100">
+                                    <img src="/app/assets/img/<?= $user['img'] ?>" alt="John Doe"
+                                        class="me-3 rounded-circle" style="width: 60px;height: 60px;" />
+                                </div>
+
+                                <!-- Body -->
+                                <div class="col-9 ml-sm-2">
+                                    <span class="card-title" style="font-size:15px">
+                                        <?php if (isset($user['nome_inst'])) { ?>
+                                        <a href="/perfilInst?id=<?= $user['id'] ?>">
+                                            <?= substr($user['nome_inst'], 0, -16) . "..." ?>
+                                        </a>
+                                        <?php } else { ?>
+                                        <a href="/perfil?id=<?= $user['id'] ?>">
+                                            <?= $user['nome'] ?>
+                                        </a>
+                                        <?php } ?>
+                                    </span>
+                                    <p style="font-size:10px">
+                                        <?= $user['tipo_mentori'] == "Ambos" ? "Tecnico/Teóricos" : $user['tipo_mentori'] ?>
+
+                                    <div class="btn-seguir" style="margin-top:-10px">
+                                        <button id="btnSeguir_<?= $user['id'] ?>"
+                                            class="btn btn-outline-primary btn-md <?= $user['seguindo_sn'] == 1 ? 'd-none' : '' ?>"
+                                            onclick="seguir(<?= $user['id'] ?>, 'seguir')">Seguir</button>
+                                        <button id="r-btnSeguir_<?= $user['id'] ?>"
+                                            class="btn btn-outline-primary btn-md active <?= $user['seguindo_sn'] == 0 ? 'd-none' : '' ?>"
+                                            onclick="seguir(<?= $user['id'] ?>, 'r-seguir')">Seguindo</button>
+                                    </div>
+                                    </p>
+                                    <!-- Button -->
+
+                                </div>
+                                <?php } ?>
+
+                            </div>
+                        </div><!-- End Recent Activity -->
+
+                    </div>
+
+        </section>
+
+</main><!-- End #main -->

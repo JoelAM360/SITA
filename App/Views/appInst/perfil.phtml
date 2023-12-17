@@ -1,0 +1,323 @@
+  <main id="main" class="main">
+
+      <div class="pagetitle">
+          <h1>Perfil</h1>
+          <nav>
+              <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                  <li class="breadcrumb-item">Pages</li>
+                  <li class="breadcrumb-item active">Blank</li>
+              </ol>
+          </nav>
+      </div><!-- End Page Title -->
+
+      <section class="section dashboard">
+          <div class="row">
+              <div class="col-12">
+                  <div class="card">
+                      <div class="card-body">
+                          <div class="row">
+                              <!-- Area da imgans e Seguidores-->
+                              <div class="col-md-3">
+                                  <div class="profile-card pt-4 d-flex flex-column align-items-center">
+                                      <img src="/app/assets/img/<?= $this->view->user[0]['img'] ?>" alt="Profile"
+                                          class="rounded-circle" width="200" height="150">
+                                      <h5><?= $this->view->user[0]['nome'] ?></h5>
+                                      <div class="social-links mt-0 " data-bs-toggle="modal"
+                                          data-bs-target="#basicModal">
+                                          <!-- Seguidores -->
+                                          <a href="#" style="width:60px;font-size:16px"
+                                              class="btn btn-sm btn-outline-secondary text-center p-2"
+                                              data-bs-toggle="tooltip" data-bs-placement="bottom" title="Seguindo">
+                                              <span class="m-1"><?= count($this->view->seguidores) ?></span>
+                                              <i class="bi bi-person-plus-fill"></i>
+                                          </a>
+                                          <!-- End Seguidores-->
+
+                                          <!-- Seguindo-->
+                                          <a href="#" style="width:65px;font-size:16px"
+                                              class="btn btn-sm btn-outline-secondary text-center p-2"
+                                              data-bs-toggle="tooltip" data-bs-placement="bottom" title="Seguidores">
+                                              <span class="m-1"><?= count($this->view->seguindo) ?></span>
+                                              <i class="bi bi-people-fill"></i>
+                                          </a>
+                                          <!--End Seguindo-->
+                                      </div>
+
+                                      <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true"
+                                          style="display: none;">
+                                          <div class="modal-dialog modal-dialog-scrollable">
+                                              <div class="modal-content">
+
+                                                  <div class="position-absolute top-0 end-0">
+                                                      <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                          aria-label="Close"></button>
+                                                  </div>
+
+                                                  <div class="card-body">
+                                                      <h5 class="card-title">Bordered Tabs</h5>
+
+                                                      <!-- Bordered Tabs -->
+                                                      <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab"
+                                                          role="tablist">
+                                                          <li class="nav-item" role="presentation">
+                                                              <button class="nav-link active" id="home-tab"
+                                                                  data-bs-toggle="tab" data-bs-target="#seguidores"
+                                                                  type="button" role="tab" aria-controls="home"
+                                                                  aria-selected="true">Seguidores</button>
+                                                          </li>
+                                                          <li class="nav-item" role="presentation">
+                                                              <button class="nav-link" id="profile-tab"
+                                                                  data-bs-toggle="tab" data-bs-target="#seguindo"
+                                                                  type="button" role="tab" aria-controls="profile"
+                                                                  aria-selected="false">Seguindo</button>
+                                                          </li>
+                                                      </ul>
+                                                      <div class="tab-content pt-2" id="borderedTabContent">
+                                                          <div class="tab-pane fade active show" id="seguidores"
+                                                              role="tabpanel" aria-labelledby="home-tab">
+                                                              <?php foreach ($this->view->seguidores as $user) { ?>
+                                                              <ul class="list-group list-group-flush">
+                                                                  <li class="list-group-item d-flex align-items-center">
+                                                                      <div class="d-flex w-100 align-items-center">
+                                                                          <img src="/app/assets/img/<?= $user['img'] ?>"
+                                                                              alt="John Doe" class="me-3 rounded-circle"
+                                                                              style="width: 40px; height: 40px;" />
+                                                                          <a href="#" class="text-black">
+                                                                              <h6 class="mb-1 d-flex flex-column">
+                                                                                  <strong
+                                                                                      class="mb-1"><?= $user['nome'] ?></strong>
+                                                                                  <small
+                                                                                      class="text-muted"><?= $user['instituicao'] ?></small>
+                                                                              </h6>
+                                                                          </a>
+                                                                      </div>
+                                                                      <!-- Button -->
+                                                                      <div class="btn-seguir">
+                                                                          <button id="btnSeguir_<?= $user['id'] ?>"
+                                                                              class="btn btn-outline-primary btn-sm <?= $user['seguindo_sn'] == 1 ? 'd-none' : '' ?>"
+                                                                              onclick="seguir(<?= $user['id'] ?>, 'seguir')">Seguir</a>
+                                                                              <button
+                                                                                  id="r-btnSeguir_<?= $user['id'] ?>"
+                                                                                  class="btn btn-outline-primary btn-sm active <?= $user['seguindo_sn'] == 0 ? 'd-none' : '' ?>"
+                                                                                  onclick="seguir(<?= $user['id'] ?>, 'r-seguir')">Seguindo</a>
+                                                                      </div>
+                                                                  </li>
+
+                                                              </ul>
+                                                              <?php } ?>
+
+                                                          </div>
+                                                          <div class="tab-pane fade" id="seguindo" role="tabpanel"
+                                                              aria-labelledby="profile-tab">
+                                                              <?php foreach ($this->view->seguindo as $user) { ?>
+                                                              <ul class="list-group list-group-flush">
+                                                                  <li class="list-group-item d-flex align-items-center">
+                                                                      <div class="d-flex w-100 align-items-center">
+                                                                          <img src="/app/assets/img/<?= $user['img'] ?>"
+                                                                              alt="John Doe" class="me-3 rounded-circle"
+                                                                              style="width: 40px; height: 40px;" />
+                                                                          <a href="#" class="text-black">
+                                                                              <h6 class="mb-1 d-flex flex-column">
+                                                                                  <strong
+                                                                                      class="mb-1"><?= $user['nome'] ?></strong>
+                                                                                  <small
+                                                                                      class="text-muted"><?= $user['instituicao'] ?></small>
+                                                                              </h6>
+                                                                          </a>
+                                                                      </div>
+                                                                      <button type="button"
+                                                                          class="btn btn-outline-primary btn-sm">Seguir</button>
+                                                                  </li>
+
+                                                              </ul>
+                                                              <?php } ?>
+                                                          </div>
+                                                      </div><!-- End Bordered Tabs -->
+
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary"
+                                                          data-bs-dismiss="modal">Close</button>
+                                                      <button type="button" class="btn btn-primary">Save
+                                                          changes</button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+
+
+                                  </div>
+
+
+                              </div>
+                              <!-- Fim Area da imgans e Seguidores-->
+
+
+                              <!-- Area das Informações do Users-->
+                              <div class="col-md-8">
+                                  <h5 class="card-title">Tipo de Conta</h5>
+                                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque quis iste
+                                      soluta eius dolor pariatur fugiat, neque tempore laborum animi mollitia voluptates
+                                      fuga doloribus nesciunt porro! Harum error repellat quam?</p>
+                                  <small><strong>Instituição:</strong>
+                                      <?= (empty($this->view->cursos) ? $this->view->user[0]['nome_inst'] : $this->view->cursos[0]['nome_inst']) ?></small><br>
+                                  <small><strong>Localização:</strong>
+                                      <?= (empty($this->view->cursos) ? $this->view->user[0]['localizacao'] : $this->view->cursos[0]['localizacao']) ?></small><br>
+
+                              </div>
+                              <!-- Fim Area das Informações do Users-->
+                          </div>
+                          <!--Fim Row interna-->
+                      </div>
+                  </div>
+                  <hr>
+              </div>
+
+              <div class="col-lg-8" style="margin-top:-20px">
+                  <div class="card-body">
+                      <h5 class="card-title">Meus Arquivos</h5>
+
+                      <!-- Bordered Tabs -->
+                      <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+                          <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                  data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home"
+                                  aria-selected="true">Home</button>
+                          </li>
+                          <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                                  data-bs-target="#bordered-contact" type="button" role="tab" aria-controls="contact"
+                                  aria-selected="false">Contact</button>
+                          </li>
+                      </ul>
+                      <div class="tab-content pt-2" id="borderedTabContent">
+                          <div class="tab-pane fade active show" id="bordered-home" role="tabpanel"
+                              aria-labelledby="home-tab">
+                              <!--======================= Área dos Pdf(Projetos) =========================-->
+                              <?php if (count($this->view->upload) == 0) { ?>
+                              <div class="row">
+                                  <?php foreach ((empty($this->view->cursos) ? $this->view->user : $this->view->cursos) as $curso) { ?>
+                                  <div class="col-md-3">
+                                      <a href="/listarProjetosPorCurso?curso=<?= $curso['nome_curso'] ?>&id_admin=<?= $curso['id_admin'] ?>"
+                                          class="text-dark d-block" onclick="addProjetos(<?= $curso['id'] ?>)">
+                                          <div class="d-flex flex-column">
+                                              <i class="bi bi-folder-fill" style=" font-size: 100px;"></i>
+                                              <small
+                                                  style="font-size:12px; margin-top:-10px; margin-left:10px"><strong><?= strtoupper($curso['nome_curso']) ?></strong></small>
+                                          </div>
+
+                                      </a>
+                                  </div>
+                                  <?php } ?>
+                              </div>
+                              <?php } else { ?>
+                              <div class="row">
+                                  <nav style="--bs-breadcrumb-divider: '>'; margin-top:10px">
+                                      <ol class="breadcrumb">
+                                          <li class="breadcrumb-item"><a
+                                                  href="/perfilInst?id=<?= $_GET['id_admin'] ?>">Voltar</a></li>
+                                      </ol>
+                                  </nav>
+                                  <?php foreach ($this->view->upload as $files) { ?>
+                                  <?php foreach ($files as $id_file => $file_date) { ?>
+                                  <div class="col-md-6">
+                                      <!-- Card with an image on left -->
+                                      <div class="card mb-3" style="height:200px;">
+
+                                          <div class="d-flex g-0 h-100">
+                                              <div>
+                                                  <div class="card-body">
+                                                      <span class="card-title" style="font-size:15px"><a href="#"
+                                                              data-bs-toggle="modal"
+                                                              data-bs-target="#modalDialogScrollable_<?= $id_file ?>"
+                                                              onclick="lerPdf('<?= $file_date['upload'] ?>',<?= $id_file ?>)"><?= $file_date['nome_projeto'] ?></a></span>
+                                                      <p>Lorem ipsum</p>
+                                                      <!-- Modal Dialog Scrollable -->
+                                                      <div class="modal fade" id="modalDialogScrollable_<?= $id_file ?>"
+                                                          tabindex="-1">
+                                                          <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                                                              <div class="modal-content">
+                                                                  <div class="modal-header">
+                                                                      <h5 class="modal-title">
+                                                                          <?= $file_date['nome_projeto'] ?></h5>
+                                                                      <button type="button" class="btn-close"
+                                                                          data-bs-dismiss="modal"
+                                                                          aria-label="Close"></button>
+                                                                  </div>
+                                                                  <div class="modal-body bg-secodary">
+                                                                      <div id="container<?= $id_file ?>"></div>
+                                                                  </div>
+                                                                  <div class="modal-footer">
+                                                                      <button id="zoom_plus<?= $id_file ?>">-</button>
+                                                                      <button id="zoom_out<?= $id_file ?>">+</button>
+
+                                                                      <button type="button" class="btn btn-secondary"
+                                                                          data-bs-dismiss="modal">Close</button>
+                                                                      <button type="button" class="btn btn-primary">Save
+                                                                          changes</button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div><!-- End Modal Dialog Scrollable-->
+                                                  </div>
+                                                  <div
+                                                      class="card-body d-flex align-items-end justify-content-between  h-50">
+                                                      <a href="#">
+                                                          <img src="/app/assets/img/<?= $file_date['img'] ?>"
+                                                              class="img-fluid rounded-circle" style="margin-right:10px"
+                                                              width="25" height="25" alt="...">
+                                                          <span
+                                                              style="font-size: 14px;overflow: hidden;"><?= $file_date['nome'] ?></span>
+                                                      </a>
+
+                                                      <span id="r-curtir_<?= $file_date['id_projeto'] ?>" class="d-none"
+                                                          onclick="avaliarProjeto('r-curtir', <?= $file_date['id_projeto'] ?>)">
+                                                          <i class="bi bi-hand-thumbs-up-fill"></i>
+                                                      </span>
+                                                      <span id="curtir_<?= $file_date['id_projeto'] ?>"
+                                                          onclick="avaliarProjeto('curtir', <?= $file_date['id_projeto'] ?>)">
+                                                          <i class="bi bi-hand-thumbs-up"></i>
+                                                      </span>
+                                                      <span
+                                                          id="textLikes_<?= $file_date['id_projeto'] ?>"><?= $file_date['qtdLikes'] ?></span>
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                      </div>
+                                      <!-- End Card with an image on left -->
+                                  </div>
+                                  <?php } ?>
+                                  <?php } ?>
+                              </div>
+                              <?php } ?>
+                              <!--=============================Fim Area ==================================-->
+                          </div>
+
+                          <div class="tab-pane fade" id="bordered-contact" role="tabpanel"
+                              aria-labelledby="contact-tab">
+                              Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque.
+                              Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit
+                              molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+                          </div>
+                      </div><!-- End Bordered Tabs -->
+
+                  </div>
+              </div>
+      </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+      <div class="copyright">
+          &copy; Copyright <strong><span>Sita</span></strong>. Todos os Direitos Reservados
+      </div>
+      <div class="credits">
+          Designed by <a href="#">Joel Malamba</a>
+      </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+          class="bi bi-arrow-up-short"></i></a>

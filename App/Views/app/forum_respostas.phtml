@@ -1,0 +1,63 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Perguntas e Respostas</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/forum">Voltar</a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card top-selling overflow-auto" id="card_container">
+
+                    <div class="card-header pb-1 text-black" id="card_header">
+                        <a href="/forum_respostas">
+                            <img src="/app/assets/img/<?= $this->view->pergunta[0]['img'] ?>"
+                                style="border-radius: 50%; width:50px" alt="">
+                        </a>
+
+                        <a href="/forum_respostas" class="text-primary fw-bold mt-1 mb-1">
+                            <?= $this->view->pergunta[0]['nome'] ?>
+                        </a>
+                        <h4 class="text-primary fw-bold pb-0">
+                            <?= $this->view->pergunta[0]['questao'] ?>
+                        </h4>
+                        <?= $this->view->pergunta[0]['detalhes_questao'] ?>
+                    </div>
+                    <?php foreach ($this->view->respostas as $value) { ?>
+
+                        <div class="card-body mt-2 ml-5 pb-1 text-black" style="margin-left:20px">
+                            <a href="/forum_respostas">
+                                <img src="/app/assets/img/<?= $value['img'] ?>" style="border-radius: 50%; width:50px"
+                                    alt="">
+                            </a>
+                            <a href="/forum_respostas" class="text-primary fw-bold mt-3 mb-1">
+                                <?= $value['nome'] ?>
+                            </a>
+
+                            <?= $value['resposta'] ?>
+                            <?php if ($value['id'] == $_SESSION['id']) { ?>
+                                <a href="/forum_respostas_editar?id_resposta=<?= $value['id_resposta'] ?>"
+                                    class="pl-3">Editar</a>
+                                <a href="/forum_respostas_delete?id_resposta=<?= $value['id_resposta'] ?>">Remover</a>
+                            <?php } ?>
+                        </div>
+                        <hr>
+                    <?php } ?>
+
+                    <div class="card-footer pb-2" id="card_footer">
+                        <!-- Quill Editor Default -->
+                        <div class="quill-editor-default text-black" id="detalhes_pergunta">
+                        </div>
+                        <button class="btn btn-primary mt-2"
+                            onclick="forumRespostas(<?= $_GET['id_pergunta'] ?>, '<?= $_SESSION['img'] ?>')">Salvar</button>
+                    </div>
+
+                </div>
+            </div>
+    </section>
+</main>

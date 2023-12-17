@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       progress {
+         
+           -webkit-appearance: none;
+       }
+       progress::-webkit-progress-bar {
+           background: rgb(211, 211, 211);
+           border-radius: 3px;
+           padding: 1px;
+       }
+       
+       progress::-webkit-progress-value {
+           border-radius: 3px;
+           background:#3383fa;
+       }
+    </style>
+</head>
+<body>
+    <form name="form" enctype="multipart/form-data">
+        <label>Select File To Upload</label>
+
+        <input type="file" name="file">
+        <input type="submit" value="Upload File" name="submit">
+
+        <progress value="0" max="100" ></progress>
+    </form>
+<br>
+    <div>
+        <button id="teste">Teste</button>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        document.getElementById("teste").addEventListener('contextmenu', (e) =>{
+            e.preventDefault()
+            alert("teste")
+        })
+    </script>
+</body>
+</html>

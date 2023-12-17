@@ -1,0 +1,123 @@
+  <main>
+    <div id="containerGif" class="d-none d-flex flex-column align-items-center justify-content-center mt-5">
+       <img src="index/assets/img/check_ok.gif" width="500">
+       <p class="text-success"><strong>Cadastro Feito Com Sucesso</strong></p>
+    </div>
+    
+    <div class="container" id="container">
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                  <img src="assets/img/" alt="">
+                  <span class="d-none d-lg-block">Sita</span>
+                </a>
+              </div><!-- End Logo -->
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Criar uma conta</h5>
+                    <p class="text-center small">Digite seus dados pessoais para criar conta</p>
+                  </div>
+
+                  <form id="form" enctype="multipart/form-data" method="post" class="row g-3 needs-validation" novalidate>
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">Seu Nome</label>
+                      <input type="text" name="nome" class="form-control" value="<?php if(isset($this->view->user['nome'])) {echo $this->view->user['nome'];}else echo "";  ?>" id="nome" required>
+                      <div class="invalid-feedback">Please, enter your name!</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourUsername" class="form-label">Seu Email</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <input type="email" name="email" class="form-control" value="<?php if(isset($this->view->user['email'])) {echo $this->view->user['email'];}else echo "";  ?>" id="email" required>
+                        <div class="invalid-feedback">Escolha um nome de usuário.</div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="tipo_conta" class="form-label">Tipo de Conta</label>
+                      <select class="form-select" name="tipo_conta" id="tipo_conta" aria-label="Default select example" required>
+                        <option value="">Selecione um tipo de conta</option>
+                        <option>Conta Comum</option>
+                        <option>Conta Instituicinal</option>
+                      </select>
+                      <div class="invalid-feedback">Escolha o tipo de conta</div>
+                    </div>
+                    <div class="col-12">
+                      <label for="image" class="form-label">Carregue Uma Imagem</label>
+                      <input type="file" name="image" class="form-control" id="image" required>
+                      <div class="invalid-feedback">Escolha foto para seu perfil</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="senha" class="form-label">Crie Uma Senha</label>
+                      <input type="password" name="senha" class="form-control" id="senha" required>
+                      <div class="invalid-feedback">Escolha um nome de usuário.</div>
+                    </div>
+
+                   <div class="col-12">
+                      <label for="senha_confirm" class="form-label">Confirme a Senha</label>
+                      <input type="password" name="senha_confirm" class="form-control" id="senha_confirm" required>
+                      <div class="invalid-feedback">Escolha um nome de usuário.</div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="form-check">
+                        <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
+                        <label class="form-check-label" for="acceptTerms">Aceito e aceito os <a href="#" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">termos e condições</a></label>
+                        <div class="invalid-feedback">Você deve concordar antes de submeter.</div>
+
+                        <!-- Modal Dialog Scrollable -->
+                         <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
+                           <div class="modal-dialog modal-dialog-scrollable">
+                             <div class="modal-content">
+                               <div class="modal-header">
+                                 <h5 class="modal-title">Modal Dialog Scrollable</h5>
+                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                               </div>
+                               <div class="modal-body">
+                                 Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
+                                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                                 This content should appear at the bottom after you scroll.
+                               </div>
+                               <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                 <button type="button" class="btn btn-primary">Save changes</button>
+                               </div>
+                             </div>
+                           </div>
+                         </div><!-- End Modal Dialog Scrollable-->
+                         
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button id="btnSubmitRegister" class="btn btn-primary w-100">Criar Conta</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">Já possui uma conta? <a href="/login">Entre</a></p>
+                    </div>
+                    <small id="small" class='form-text text-danger'></small>
+                  </form>
+
+                </div>
+              </div>
+
+              <div class="credits">
+                Designed by <a href="#">Joel Malamba</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+  <div class="d-none" id="preloader"></div>

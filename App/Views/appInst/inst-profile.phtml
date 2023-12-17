@@ -1,0 +1,342 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Perfil</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="/app/assets/img/<?= $_SESSION['img'] ?>" width="250" height="140" alt="Profile"
+                            class="rounded-circle">
+                        <h2>
+                            <?= $_SESSION['nome'] ?>
+                        </h2>
+                        <h3>Web Designer</h3>
+                        <div class="social-links mt-2">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab"
+                                    data-bs-target="#profile-overview">Detalhes</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar
+                                    Meu Perfil</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit-inst">Editar
+                                    Perfil
+                                    Institucional</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#profile-change-password">Mudar
+                                    Senha</button>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <h5 class="card-title">Sobre</h5>
+                                <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores
+                                    cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure
+                                    rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at
+                                    unde.</p>
+
+                                <h5 class="card-title">Detalhes Perfil</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Nome Admin</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        <?= count($this->view->user) > 0 ? $this->view->user['nome'] : $_SESSION['nome'] ?>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Instituição</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        <?= count($this->view->user) > 0 ? $this->view->user['nome_inst'] : "A definir" ?>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Cargo do Admin</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        <?= count($this->view->user) > 0 ? $this->view->user['profissao'] : "A definir" ?>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">País</div>
+                                    <div class="col-lg-9 col-md-8">Angola</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                <!-- Profile Edit Form -->
+                                <form action="/editarInst?acao=user" method="post">
+                                    <div class="row mb-3">
+                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Foto de
+                                            Perfil</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img src="/app/assets/img/<?= $_SESSION['img'] ?>" height="120"
+                                                alt="Profile">
+                                            <div class="pt-2">
+                                                <a href="#" class="btn btn-primary btn-sm"
+                                                    title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm"
+                                                    title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nome
+                                            Completo</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="fullName" type="text" class="form-control" id="fullName"
+                                                value="<?= $_SESSION['nome'] ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="about" class="col-md-4 col-lg-3 col-form-label">Sobre</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <textarea name="about" class="form-control" id="about"
+                                                style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="Job" class="col-md-4 col-lg-3 col-form-label">Ocupação</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="job" type="text" class="form-control" id="Job"
+                                                value="Web Designer">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Telefone</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="phone" type="text" class="form-control" id="Phone"
+                                                value="(436) 486-3538 x29071">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="email" type="email" class="form-control" id="Email"
+                                                value="k.anderson@example.com">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Perfil Facebook
+                                        </label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="facebook" type="text" class="form-control" id="Facebook"
+                                                value="https://facebook.com/#">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Perfil Linkedin
+                                        </label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="linkedin" type="text" class="form-control" id="Linkedin"
+                                                value="https://linkedin.com/#">
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Salvar Mudanças</button>
+                                    </div>
+                                </form><!-- End Profile Edit Form -->
+
+                            </div>
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit-inst">
+                                <!-- Profile Edit Form -->
+                                <form id="form_entidade" action="/editarContaInst?acao=inst" method="post">
+
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nome</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="nome_inst" type="text" class="form-control" id="fullName"
+                                                placeholder="Nome da Instituição"
+                                                value="<?= count($this->view->user) > 0 ? $this->view->user['nome_inst'] : "" ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="about" class="col-md-4 col-lg-3 col-form-label">Sobre</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <textarea name="sobre" class="form-control" id="about" style="height: 130px"
+                                                placeholder="Descrição Sobre A Instituição"><?= count($this->view->user) > 0 ? $this->view->user['sobre_inst'] : "" ?></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="address"
+                                            class="col-md-4 col-lg-3 col-form-label">Localização</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="localizacao" type="text" class="form-control" id="address"
+                                                placeholder="Cacuaco, Bairro 4 de Fevereiro Frente a Escola 8027"
+                                                value="<?= count($this->view->user) > 0 ? $this->view->user['localizacao'] : "" ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="address" class="col-md-4 col-lg-3 col-form-label">Admin</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="admin" type="number" class="form-control" id="admin"
+                                                placeholder="Quantidade de Administradores"
+                                                value="<?= count($this->view->user) > 0 ? $this->view->user['qtd_admin'] : "" ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="entidade" class="col-md-4 col-lg-3 col-form-label">Entidade
+                                            <?= (empty($this->view->user['entidade']) || $this->view->user['entidade'] == "Faculdade") ? "TEste" : "seleted" ?>
+                                        </label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <select name="entidade" id="entidade" class="form-select"
+                                                onchange="addInput()">
+                                                <option value="">Tipo de Entidade</option>
+                                                <option
+                                                    seleted="<?= (empty($this->view->user['entidade']) || $this->view->user['entidade'] == "Universidade") ? "" : "seleted" ?>">
+                                                    Universidade</option>
+                                                <option
+                                                    seleted="<?= (empty($this->view->user['entidade']) || $this->view->user['entidade'] == "Faculdade") ? "" : "seleted" ?>">
+                                                    Faculdade</option>
+                                                <option
+                                                    seleted="<?= (empty($this->view->user['entidade']) || $this->view->user['entidade'] == "Centro de Formação") ? "" : "seleted" ?>">
+                                                    Centro de Formação</option>
+                                                <option
+                                                    seleted="<?= (empty($this->view->user['entidade']) || $this->view->user['entidade'] == "Liceu de Ensino Médio") ? "" : "seleted" ?>">
+                                                    Liceu de Ensino Médio</option>
+                                            </select>
+                                            <small class="text-primary" style="cursor:pointer;" onclick="addInput()">Add
+                                                mais Curso Ou
+                                                Faculdade</small>
+                                        </div>
+                                    </div>
+                                    <div class="text-center" id="button_save">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#confirmModal">Salvar Informações</button>
+                                    </div>
+                                    <!-- Modal de Confirmação -->
+                                    <div class="modal fade" id="confirmModal" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Atenção!!</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Só poderás alterar as configurações da Entidade após efetuar uma
+                                                    solitação e aguardar 24 horas pela resposta.
+                                                    <br>
+                                                    <br>
+                                                    Desejas continuar?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Verificar</button>
+                                                    <button type="submit" class="btn btn-primary">Continuar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal de Confirmação Fim -->
+
+                                </form><!-- End Profile Edit Form -->
+
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <!-- Change Password Form -->
+                                <form>
+
+                                    <div class="row mb-3">
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">
+                                            Senha Atual</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="password" type="password" class="form-control"
+                                                id="currentPassword">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nova
+                                            Senha</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="newpassword" type="password" class="form-control"
+                                                id="newPassword">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Confirmar
+                                            Nova Senha</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="renewpassword" type="password" class="form-control"
+                                                id="renewPassword">
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Mudar Senha</button>
+                                    </div>
+                                </form><!-- End Change Password Form -->
+
+                            </div>
+
+                        </div><!-- End Bordered Tabs -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
